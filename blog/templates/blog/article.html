@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1> Blog Page </h1>
+{% for article in articles %}
+    {% if admin %}
+        pk:<a href="{% url 'blog:edit' article.pk %}">{{ article.pk }}</a><br>
+    {% else %}
+        pk:<a href="{% url 'blog:detail' article.pk %}">{{ article.pk }}</a><br>
+    {% endif %}
+    author:{{ article.author }}<br>
+    title:{{ article.title }}<br>
+    created_at:{{ article.created_at }}<br>
+    <hr>
+{% endfor %}
+{% endblock %}

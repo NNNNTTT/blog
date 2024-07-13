@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1> Detail Page </h1>
+<table>
+    <tr>
+        <th>TITLE</th>
+        <td>{{ article.title }}</td>
+    </tr>
+    <tr>
+        <th>BODY</th>
+        <td>{{ article.body }}</td>
+    </tr>
+    <tr>
+        <th>Created_at</th>
+        <td>{{ article.created_at }}</td>
+    </tr>
+</table>
+{% endblock %}

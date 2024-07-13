@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>SignUp page </h1>
+{% if user.is_authenticated %}
+    Hello {{ user.email }}
+{% else %}
+    <form action="{% url 'signup:index' %}" method= "POST">
+        {{ form }}
+        <button type="submit">Sign up</button>
+        {% csrf_token %}
+    </form>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1> Edit Page </h1>
+<form action="{% url 'blog:update_or_delete' article.pk %}" method= "POST">
+    <table>
+        <tr>
+            <th>TITLE</th>
+        
+            <td><input type="text" name="title" value="{{ article.title }}"></td>
+        </tr>
+        <tr>
+            <th>BODY</th>
+            <td><input type="text" name="body" value="{{ article.body }}"></td>
+        </tr>
+        <tr>
+            <th>Created_at</th>
+            <td>{{ article.created_at }}</td>
+        </tr>
+    </table>
+{% csrf_token %}
+<button type="submit" name="update" onclick="return confirm('Edit?')">Edit</button>
+<br><br>
+<button type="submit" name="delete" onclick="return confirm('Delete?')">Delete</button>
+</form>
+
+{% endblock %}

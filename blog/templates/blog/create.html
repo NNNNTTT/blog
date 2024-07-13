@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Post Page </h1>
+<form action="{% url 'blog:create' %}" method= "POST">
+    {% for field in form %}
+    <label>{{ field.label_tag }}</label>
+    {{ field }}<br><br>
+    {% endfor %}
+    <button type="submit">Post</button>
+    {% csrf_token %}
+</form>
+
+{% endblock %}
