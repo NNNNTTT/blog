@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Collection
 from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser, PermissionsMixin
@@ -15,6 +15,7 @@ class UserManager(BaseUserManager):
         email = self.normalize_email(email)
 
         user = self.model(email=email, **kwargs)
+        #self.modelはUserクラスを呼び出して、インスタンスを作成してる
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -43,6 +44,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
 
     objects = UserManager()
+    # 上記コードを書くとBaseUserManager内で下記のような処理が裏で行われる。
+    #user_model = User
+
+    # マネージャーのインスタンスを作成
+    #manager = UserManager()
+    #manager.model = user_model  # ここで model 属性が設定される
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
@@ -50,4 +57,5 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
-
+    def validate_email(self):
+        return len(self.email) <= 255

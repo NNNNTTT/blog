@@ -8,5 +8,5 @@ class UserCreateForm(UserCreationForm):
         model = User
         fields = ("email", )
 
-    def __int__(self, *args, **kwargs) -> None:
-        super().__int__(*args, **kwargs)
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)

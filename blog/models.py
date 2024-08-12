@@ -13,6 +13,8 @@ class Article(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
 
-
     def __str__(self) -> str:
         return self.title
+    
+    def validate_title(self):
+        return len(self.title) <= 30

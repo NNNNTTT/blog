@@ -20,4 +20,4 @@ services:
     environment:
       DOMAINS: "blog.ars-system.net -> http://web:8000/"
       STAGE: "production"
-      #FORCE_RENEW: "true"
+      #FORCE_RENEW: "true" 3ヶ月に一回更新を行わないといけないがそれを自動で更新してくれます

@@ -1,19 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
-
-<h1> Detail Page </h1>
-<table>
-    <tr>
-        <th>TITLE</th>
-        <td>{{ article.title }}</td>
-    </tr>
-    <tr>
-        <th>BODY</th>
-        <td>{{ article.body }}</td>
-    </tr>
-    <tr>
-        <th>Created_at</th>
-        <td>{{ article.created_at }}</td>
-    </tr>
-</table>
+<div class="row" style="margin: 5em;">
+    <div class="col-md-8 col-xs-1" >
+        <div class="row">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static" style="position: relative;">
+                    <h3 class="mb-0">Author_{{ article.author.pk }}</h3>
+                    <div class="mb-1 text-body-secondary">{{ article.created_at }}</div>
+                    <h3 class="pb-4 mb-4 fst-italic border-bottom">{{ article.title }}</h3>
+                    <p>{{ article.body }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-xs-1">
+        <div class="position-sticky" style="top: 2rem;">
+            <div class="p-4 mb-3 bg-body-tertiary rounded">
+              <h4 class="fst-italic">About</h4>
+              <p class="mb-0">Customize this section to tell your visitors a little bit about your publication, writers, content, or something else entirely. Totally up to you.</p>
+        </div>        
+    </div>
+</div>
 {% endblock %}
