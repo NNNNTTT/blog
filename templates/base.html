@@ -19,13 +19,7 @@
                 <li>
                   <a href="{% url 'blog:article' %}" class="nav-link text-white">
                     <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#home"/></svg>
-                    Blog
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="nav-link text-white">
-                    <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#speedometer2"/></svg>
-                    Dashboard
+                    ブログ記事
                   </a>
                 </li>
 
@@ -33,19 +27,19 @@
                     <li>
                         <a href="{% url 'blog:admin' %}" class="nav-link text-white">
                         <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#speedometer2"/></svg>
-                        Admin
+                        編集
                         </a>
                     </li>
                     <li>
                         <a href="{% url 'blog:create' %}" class="nav-link text-white">
                         <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#speedometer2"/></svg>
-                        Post
+                        投稿
                         </a>
                     </li>
                     <li>
                         <a href="{% url 'signup:logout' %}" class="nav-link text-white">
                         <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#speedometer2"/></svg>
-                        Logout
+                        ログアウト
                         </a>
                     </li>
                 {% endif %}
@@ -58,14 +52,14 @@
           <div class="container d-flex flex-wrap justify-content-center">
             <form action="{% url 'blog:article' %}" method="POST" class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search">
               <input name="search" type="search" class="form-control" placeholder="Search..." aria-label="Search"><br>
-              <button class="btn btn-primary btn-sm w-30 py-2" type="submit">Search</button>
+              <button class="btn btn-primary btn-sm w-30 py-2" type="submit">検索</button>
               {% csrf_token %}
             </form>
             {% if not user.is_authenticated %}
 
                 <div class="text-end">
-                    <a href="{% url 'signup:login' %}" class="btn btn-primary">Login</a>
-                    <a href="{% url 'signup:index' %}" class="btn btn-success">Sign-up</a>
+                    <a href="{% url 'signup:login' %}" class="btn btn-primary">ログイン</a>
+                    <a href="{% url 'signup:index' %}" class="btn btn-success">新規登録</a>
                 </div>
 
             {% endif %}
@@ -78,38 +72,16 @@
     <footer class="pt-4 my-md-5 pt-md-5 border-top" style="text-align: center;">
         <div class="container">
             <div class="row">
-                <div class="col-12 col-md-12">
-                    <small class="d-block mb-3 text-body-secondary">&copy; 2017–2024</small>
+                <div class="col-12 col-md-3">
+                    <h1>Blog</h1>
+
                 </div>
                 <div class="col-12 col-md-4">
-                    <h5>Features</h5>
+                    <h5>お問い合わせ</h5>
                     <ul class="list-unstyled text-small">
-                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Cool stuff</a></li>
-                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Random feature</a></li>
-                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Team feature</a></li>
-                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Stuff for developers</a></li>
-                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Another one</a></li>
-                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Last time</a></li>
+                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="{% url 'contact:contact' %}">お問い合わせフォーム</a></li>
+
                     </ul>
-                </div>
-                <div class="col-12 col-md-4">
-                    <h5>Resources</h5>
-                    <ul class="list-unstyled text-small">
-                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource</a></li>
-                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource name</a></li>
-                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Another resource</a></li>
-                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Final resource</a></li>
-                    </ul>
-                </div>
-                <div class="col-12 col-md-4">
-                    <h5>About</h5>
-                    <ul class="list-unstyled text-small">
-                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Team</a></li>
-                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Locations</a></li>
-                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Privacy</a></li>
-                        <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Terms</a></li>
-                    </ul>
-                </div>
             </div>
         </div>
     </footer>

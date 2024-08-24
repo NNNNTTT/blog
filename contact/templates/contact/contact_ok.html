@@ -4,10 +4,10 @@
 <div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSheet">
     <div class="modal-dialog" role="document">
         <div class="modal-content rounded-4 shadow">
-            <form action="{% url 'signup:signup_ok' %}" method="POST">
+            <form action="{% url 'contact:contact_ok' %}" method="POST">
                 {% csrf_token %}
                 <div class="modal-header border-bottom-0">
-                    <h3 class="modal-title fs-5">新規登録が完了しました</h3>
+                    <h3 class="modal-title fs-5">お問い合わせの送信が完了しました</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body py-0">

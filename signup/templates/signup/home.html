@@ -32,19 +32,19 @@
 <main class="form-signin w-100 m-auto">
             <form action="{% url 'signup:index' %}" method= "POST">
               {% csrf_token %}
-              <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+              <h1 class="h3 mb-3 fw-normal">新規登録</h1>
           
               <div class="form-floating">
                 <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                <label for="floatingInput">Email address</label>
+                <label for="floatingInput">Eメールアドレス</label>
               </div>
               <div class="form-floating">
                 <input name="password1" type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                <label for="floatingPassword">Password</label>
+                <label for="floatingPassword">パスワード</label>
               </div>
               <div class="form-floating">
                 <input name="password2" type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                <label for="floatingPassword">Password for check</label>
+                <label for="floatingPassword">再度パスワードを入力</label>
               </div>
           
               <div class="form-check text-start my-3">
@@ -53,7 +53,7 @@
                   Remember me
                 </label>
               </div>
-              <button class="btn btn-success w-100 py-2" type="submit">Sign up</button>
+              <button class="btn btn-success w-100 py-2" type="submit">新規登録</button>
             </form>
 </main>
 
