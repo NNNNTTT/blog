@@ -17,7 +17,14 @@ def index(request):
         login(request, user)
         return render(request, "signup/signup_ok.html")
     else:
-        return render(request, "signup/home.html", {"form":form})
+        error_messages = form.errors.get('email', [])
+        if 'このメールアドレスはすでに使用されています。' in error_messages:
+        # メールアドレスの重複エラーに特化したメッセージを表示する
+            error_message = "このメールアドレスはすでに使用されています。別のメールアドレスを使用してください。"
+        else:
+            error_message = "メールアドレス、パスワードを正しく入力してください"
+
+        return render(request, "signup/home.html", {"form":form,"message":error_message})
 
 @login_required       
 def signup_ok(request):

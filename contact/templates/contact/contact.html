@@ -9,10 +9,14 @@
                     <form action="{% url 'contact:contact' %}" method= "POST">
                         <h3>お問い合わせフォーム</h3>
                         <br>
-                        <h4 style="color: red;">{{ message }}</h4>
+                        {% if message %}
+                        <div class="alert alert-danger" role="alert">
+                          {{ message }}
+                        </div>
+                        {% endif %}
                         <h4>お名前</h4>
                         <textarea name="name" style="width: 70%;height: 5vh; font-size: 30px;" ></textarea>
-                        <h4>Email</h4>
+                        <h4>Eメールアドレス</h4>
                         <textarea name="email" style="width: 70%;height: 5vh; font-size: 30px;" ></textarea>
                         <h4>メッセージ</h4>
                         <textarea name="message" style="width: 100%;height: 40vh;" placeholder="お問い合わせ内容"></textarea>

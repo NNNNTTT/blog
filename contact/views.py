@@ -14,7 +14,7 @@ class ContactView(View):
     def post(self, request, *args, **kwargs):
         form = ContactForm(request.POST)
         if not form.is_valid():
-            context = {"form":form,"message":"※お名前を20文字以下、または正しいEmailを入力してください"}
+            context = {"form":form,"message":"※お名前を20文字以下、または正しいEメールアドレスを入力してください"}
             return render(request, "contact/contact.html", context)
         form.save()
         return render(request, "contact/contact_ok.html")
