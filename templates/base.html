@@ -50,9 +50,13 @@
         </div>
         <div class="px-3 py-2 border-bottom mb-3">
           <div class="container d-flex flex-wrap justify-content-center">
-            <form action="{% url 'blog:article' %}" method="POST" class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search">
-              <input name="search" type="search" class="form-control" placeholder="Search..." aria-label="Search"><br>
-              <button class="btn btn-primary btn-sm w-30 py-2" type="submit">検索</button>
+            <form action="{% url 'blog:search' %}" method="POST" class="row col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search">
+              <div class="col-auto">
+                <input name="search" type="search" class="form-control" placeholder="Search..." aria-label="Search">
+              </div>
+              <div class="col-auto">
+                <button class="btn btn-primary btn-sm w-30 py-2" type="submit">検索</button>
+              </div>
               {% csrf_token %}
             </form>
             {% if not user.is_authenticated %}

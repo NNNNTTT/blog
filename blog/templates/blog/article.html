@@ -40,5 +40,47 @@
     </div>
 </div>
 
+{% if not search_text %}
+<div class="pager">
+    <!-- 前のページへのリンク -->
+    {% if articles.has_previous %}
+        <a style="padding: 5px 10px;" href="?p={{ articles.previous_page_number }}">前へ</a>
+    {% endif %}
+
+    {% for n in num_list %}
+        {% if articles.number == n %}
+            <span class="active">{{ n }}</span> <!-- 現在のページはリンク化しない -->
+        {% else %}
+            <a href="?p={{ n }}">{{ n }}</a> <!-- その他のページはリンク化 -->
+        {% endif %}
+    {% endfor %}
+
+    <!-- 次のページへのリンク -->
+    {% if articles.has_next %}
+    <a style="padding: 5px 10px;" href="?p={{ articles.next_page_number }}">次へ</a>
+    {% endif %}
+
+</div>
+{% else %}
+<div class="pager">
+    <!-- 前のページへのリンク -->
+    {% if articles.has_previous %}
+        <a href="?search={{ search_text }}&p={{ articles.previous_page_number }}">前へ</a>
+    {% endif %}
+
+    {% for n in num_list %}
+        {% if articles.number == n %}
+            <span class="active">{{ n }}</span> <!-- 現在のページはリンク化しない -->
+        {% else %}
+            <a href="?search={{ search_text }}&p={{ n }}">{{ n }}</a> <!-- その他のページはリンク化 -->
+        {% endif %}
+    {% endfor %}
+
+    <!-- 次のページへのリンク -->
+    {% if articles.has_next %}
+        <a href="?search={{ search_text }}&p={{ articles.next_page_number }}">次へ</a>
+    {% endif %}
+</div>
+{% endif %}
 
 {% endblock %}

@@ -2,18 +2,39 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from .models import Article
 from .forms import ArticleCreateForm
+from django.core.paginator import Paginator
 
 # Create your views here.
 def article_view(request):
     if request.method == "GET":
         articles = Article.objects.all().order_by("-created_at")
+        paginator = Paginator(articles, 10) # 1ページに10件表示
+        p = request.GET.get('p') # URLのパラメータから現在のページ番号を取得
+        articles = paginator.get_page(p) # 指定のページのArticleを取得
+        num_list = list(paginator.page_range)
+    context = {"articles":articles,"num_list":num_list}
+    return render(request,"blog/article.html",context)
+
+def search(request):
+    if request.method == "GET":
+        search_text = request.GET.get('search', '')
+        print(search_text)
+        search_articles = Article.objects.filter(title__contains = search_text).order_by("-created_at")
+        paginator = Paginator(search_articles, 10) # 1ページに10件表示
+        p = request.GET.get('p') # URLのパラメータから現在のページ番号を取得
+        search_articles = paginator.get_page(p) # 指定のページのArticleを取得
+        num_list = list(paginator.page_range)
+
     else:
         search_text = request.POST["search"]
-        articles = Article.objects.filter(
-            title__contains = search_text
-        ).order_by("-created_at")
-    context = {"articles":articles}
+        search_articles = Article.objects.filter(title__contains = search_text).order_by("-created_at")
+        paginator = Paginator(search_articles, 10) # 1ページに10件表示
+        p = request.GET.get('p') # URLのパラメータから現在のページ番号を取得
+        search_articles = paginator.get_page(p) # 指定のページのArticleを取得
+        num_list = list(paginator.page_range)
+    context = {"articles":search_articles,"search_text":search_text,"num_list":num_list}
     return render(request,"blog/article.html",context)
+
 
 def detail(request, pk: int):
     article = Article.objects.get(pk=pk)
