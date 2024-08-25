@@ -4,7 +4,6 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser, PermissionsMixin
 )
 from django.utils import timezone
-
 # Create your models here.
 class UserManager(BaseUserManager):
     use_in_migrations = True
@@ -38,6 +37,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True)
+    username = models.CharField(max_length=20,unique=True,null=True, blank=True)
     create_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
     is_staff = models.BooleanField(default=False)
@@ -59,3 +59,4 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def validate_email(self):
         return len(self.email) <= 255
+    
