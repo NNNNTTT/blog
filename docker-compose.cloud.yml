@@ -7,39 +7,32 @@ services:
       - .:/code
     expose:
       - 8000
+    environment:
+      - CLOUD_SQL=1
     env_file:
       - ./.env
     depends_on:
       - db 
-  http:
-    image: steveltn/https-portal:1
-    container_name: http
-    volumes:
-      - ./ssl_certs:/var/lib/https-portal
-    ports:
-      - "80:80"
-      - "443:443"
-    links:
-      - web
-    environment:
-      DOMAINS: "blog.ars-system.net -> http://web:8000/"
-      STAGE: "production"
-
   db:
-    image: postgres:13.0-alpine
+    image: gcr.io/cloudsql-docker/gce-proxy:1.16
+    command: 
+      [
+        "/cloud_sql_proxy",
+        "-instances=blog-429308:us-central1:blog=tcp:0.0.0.0:5432",
+        "-credential_file=/config/cloud-sql.json"
+      ]
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - ./cloud-sql.json:/config/cloud-sql.json
     environment:
       - POSTGRES_USER=tsubota-naoki
       - POSTGRES_PASSWORD=tsubota-naoki
       - POSTGRES_DB=blog_db
-
+    ports:
+      - "5432:5432"
   nginx:
     build: ./nginx
     ports:
-      - "8080:80"
+      - "80:80"
     depends_on:
       - web
 
-volumes:
-  postgres_data:

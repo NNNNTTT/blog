@@ -25,7 +25,8 @@ SECRET_KEY = "django-insecure-j-0bf#qz@1*rp!vp%1&3a(8o)m651ajd$l@#_+_kr*n7ij75f1
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-CSRF_TRUSTED_ORIGINNS = ["https://*.blog.ars-system.net"] 
+CSRF_TRUSTED_ORIGINS = ["http://localhost:8080","https://*.blog.ars-system.net"]
+
 ALLOWED_HOSTS = ['*']
 
 
@@ -76,18 +77,30 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 
 # Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+# https://docs.djangoproject.com/en/5.0/ref/settings/#databases 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'blog_db',
-        'USER': 'tsubota-naoki',
-        'PASSWORD': 'tsubota-naoki',
-        'HOST': 'db',
-        'PORT': '5432',
+if os.environ.get("CLOUD_SQL"):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'postgres', #データベースの名前
+            'USER': 'postgres',
+            'PASSWORD': 'wilshere08',
+            'HOST': 'db',
+            'PORT': '5432',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'blog_db',
+            'USER': 'tsubota-naoki',
+            'PASSWORD': 'tsubota-naoki',
+            'HOST': 'db',
+            'PORT': '5432',
+        }
+    }
 
 
 # Password validation

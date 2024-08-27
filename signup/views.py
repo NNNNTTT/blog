@@ -2,8 +2,11 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth import login, logout, authenticate
-from .forms import UserCreateForm
+from .forms import UserCreateForm,UserNameForm
 from django.contrib.auth.decorators import login_required
+import logging
+
+logger = logging.getLogger(__name__)
 # Create your views here.
 
 def index(request):
@@ -15,7 +18,7 @@ def index(request):
     if form.is_valid():
         user = form.save()
         login(request, user)
-        return render(request, "signup/signup_ok.html")
+        return render(request, "signup/username_create.html")
     else:
         error_messages = form.errors.get('email', [])
         if 'このメールアドレスはすでに使用されています。' in error_messages:
@@ -49,3 +52,25 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("blog:article"))
+
+def username_create(request):
+    if request.method == "GET":
+        context = {"form":UserNameForm()}
+        return render(request, "signup/username_create.html",context)
+    
+    form = UserNameForm(request.POST)
+    
+        # フォームのエラーとデータをログに出力
+    if not form.is_valid():
+        print(form.errors)
+
+    if form.is_valid():
+        user = request.user
+        username = form.cleaned_data["username"]
+        user.username = username
+        user.save()
+        return render(request, "signup/signup_ok.html")
+    
+    context = {"message":"ユーザーネームが正しくありません"}
+    return render(request,"signup/username_create.html",context)
+    

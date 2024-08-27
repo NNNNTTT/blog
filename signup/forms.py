@@ -18,7 +18,7 @@ class UserCreateForm(UserCreationForm):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
-class UserNameForm(UserCreateForm):
+class UserNameForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ("username",)

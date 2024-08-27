@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    html,
+    body {
+    height: 100%;
+    }
+
+    .form-signin {
+    max-width: 330px;
+    padding: 1rem;
+    text-align: center;
+    }
+
+    .form-signin .form-floating:focus-within {
+    z-index: 2;
+    }
+
+    .form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    }
+
+    .form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    }
+</style>
+
+<main class="form-signin w-100 m-auto">
+            {% if message %}
+            <div class="alert alert-danger" role="alert">
+              {{ message }}
+            </div>
+            {% endif %}
+            <form action="{% url 'signup:username_create' %}" method= "POST">
+              {% csrf_token %}
+              <h1 class="h3 mb-3 fw-normal">ユーザーネーム</h1>
+          
+              <div class="form-floating">
+                <input name="username" type="text" class="form-control"  placeholder="ユーザーネーム">
+                <label for="floatingInput">ユーザーネーム</label>
+              </div>
+
+              <button class="btn btn-success w-100 py-2" type="submit">保存</button>
+            </form>
+</main>
+
+{% endblock %}
