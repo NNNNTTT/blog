@@ -8,7 +8,10 @@
                     <h3 class="mb-0">ユーザー_{{ article.author.username }}</h3>
                     <div class="mb-1 text-body-secondary">{{ article.created_at }}</div>
                     <h3 class="pb-4 mb-4 fst-italic border-bottom">{{ article.title }}</h3>
-                    <p>{{ article.body }}</p>
+                    {% if article.picture %}
+                        <img src="{{ article.picture.url }}">
+                    {% endif %}
+                    <pre>{{ article.body }}</pre>
                 </div>
             </div>
         </div>

@@ -4,4 +4,4 @@ from .models import Article
 class ArticleCreateForm(forms.ModelForm):
     class Meta:
         model = Article
-        fields = ("title","body")
+        fields = ("title","body","picture")

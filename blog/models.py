@@ -10,6 +10,7 @@ class Article(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=30)
     body = models.TextField()
+    picture = models.ImageField(upload_to="article/picture/",blank=True,null=True,verbose_name="写真")
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
 

@@ -4,6 +4,11 @@
     <div class="col-md-8 col-xs-1" >
         {% for article in articles %}
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                {% if article.picture %}
+                    <div class="col p-0 d-flex flex-column position-static" style="position: relative;">
+                        <img src="{{ article.picture.url }}" width=200px height=200px object-fit="cover">
+                    </div>
+                {% endif %}
                 <div class="col p-4 d-flex flex-column position-static" style="position: relative;">
                     <h3 class="mb-0">{{ article.title }}</h3>
                     <div class="mb-1 text-body-secondary">ユーザー_{{ article.author.username }}</div>
@@ -27,6 +32,8 @@
                         </a>
                     {% endif %}   
                 </div>
+                <div class="col p-0 d-flex flex-column position-static" style="position: relative;"></div>
+                <div class="col p-0 d-flex flex-column position-static" style="position: relative;"></div>
             </div>
         {% endfor %}
     </div>

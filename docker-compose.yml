@@ -13,7 +13,7 @@ services:
       - db 
   http:
     image: steveltn/https-portal:1
-    container_name: http
+    container_name: http-blog
     volumes:
       - ./ssl_certs:/var/lib/https-portal
     ports:

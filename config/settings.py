@@ -144,3 +144,9 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "signup.User"
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "/media/"
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 104857600  # 100MB
+
+

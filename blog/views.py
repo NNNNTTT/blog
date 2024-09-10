@@ -3,6 +3,39 @@ from django.shortcuts import render
 from .models import Article
 from .forms import ArticleCreateForm
 from django.core.paginator import Paginator
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from PIL import Image
+import io
+import pyheif
+
+def convert_heic_to_jpeg(uploaded_file):
+    if uploaded_file.name.lower().endswith('.heic'): #ファイル名が '.heic' で終わるかチェックします。つまり、HEIC形式のファイルか判定しています。
+        # HEIC形式の画像を読み込む
+        heif_file = pyheif.read(uploaded_file)
+        image = Image.frombytes(
+            heif_file.mode,
+            heif_file.size,
+            heif_file.data,
+            "raw",
+            heif_file.mode,
+            heif_file.stride,
+        )
+        # JPEG形式に変換
+        output = io.BytesIO()
+        image.save(output, format='JPEG')
+        output.seek(0)
+        return InMemoryUploadedFile(
+            output,
+            'FileField',
+            uploaded_file.name.replace('.heic', '.jpeg'),
+            'image/jpeg',
+            output.getbuffer().nbytes,
+            None
+        )
+    else:
+        return uploaded_file
 
 # Create your views here.
 def article_view(request):
@@ -47,14 +80,17 @@ def create(request):
         context = {"form":ArticleCreateForm}
         return render(request,"blog/create.html",context)
     else:
-        form = ArticleCreateForm(request.POST)
+        form = ArticleCreateForm(request.POST,request.FILES)
         if form.is_valid():
             article = form.save(commit=False)
             article.author = request.user
+            changed_fields = form.changed_data
+            if "picture" in changed_fields:
+                file = form.cleaned_data['picture']
+                file = convert_heic_to_jpeg(file)
+                article.picture = file
             article.save()
-            articles = Article.objects.all().order_by("-created_at")
-            context = {"articles":articles}
-            return render(request, "blog/article.html",context)
+            return HttpResponseRedirect(reverse("blog:article"))
         
         return render(request,"blog/create.html",)
     
@@ -62,7 +98,11 @@ def create(request):
 def admin(request):
     if request.method == "GET":
         articles = Article.objects.filter(author=request.user).order_by("-created_at")
-        context = {"articles":articles,"admin":True}
+        paginator = Paginator(articles, 10) # 1ページに10件表示
+        p = request.GET.get('p') # URLのパラメータから現在のページ番号を取得
+        articles = paginator.get_page(p) # 指定のページのArticleを取得
+        num_list = list(paginator.page_range)
+        context = {"articles":articles,"admin":True,"num_list":num_list}
         return render(request,"blog/article.html",context)
     
 @login_required
@@ -83,5 +123,9 @@ def update_or_delete(request, pk: int):
         elif "delete" in request.POST:
             article.delete()
         articles = Article.objects.filter(author=request.user).order_by("-created_at")
-        context = {"articles":articles,"admin":True}
+        paginator = Paginator(articles, 10) # 1ページに10件表示
+        p = request.GET.get('p') # URLのパラメータから現在のページ番号を取得
+        articles = paginator.get_page(p) # 指定のページのArticleを取得
+        num_list = list(paginator.page_range)
+        context = {"articles":articles,"admin":True,"num_list":num_list}
     return render(request,"blog/article.html", context)
